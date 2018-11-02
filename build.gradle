@@ -18,3 +18,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'net.dv8tion:JDA:3.5.0_329'
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.dnd.discord.bot.Main'
+    }
+}
