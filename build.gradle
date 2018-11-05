@@ -23,4 +23,7 @@ jar {
     manifest {
         attributes 'Main-Class': 'org.dnd.discord.bot.Main'
     }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
