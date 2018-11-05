@@ -16,10 +16,13 @@ import java.util.concurrent.TimeUnit;
 public class Main extends ListenerAdapter {
     private static Configure configure = new Configure();
     private static JDABuilder jdaBuilder;
-    private static String DUNGEONS_AND_DRAGONS_CHANNEL = "dungeons_and_dragons";
-    private static String DUNGEONS_AND_DRAGONS_ROLE = "players";
-    private static int NOON = 12;
-    private static int MONDAY = 1;
+    private final static String DUNGEONS_AND_DRAGONS_CHANNEL = "dungeons_and_dragons";
+    private final static String DUNGEONS_AND_DRAGONS_ROLE = "players";
+    private final static int NOON = 12;
+    private final static int MONDAY = 1;
+    private final static long PERIOD = 1;
+    private final static long INITIAL_DELAY = 0;
+    private final static int CORE_POOL_SIZE = 1;
 //    private static String TEST_CHANNEL = "general";
 //    private static String TEST_ROLE = "super friends";
 
@@ -49,11 +52,11 @@ public class Main extends ListenerAdapter {
         var myRole = event.getJDA().getRoles().stream().filter(x -> x.getName().toLowerCase()
                 .contains(DUNGEONS_AND_DRAGONS_ROLE)).findFirst().orElse(null);
         if (myChannel != null && myRole != null) {
-            var execService = Executors.newScheduledThreadPool(1);
-            execService.scheduleAtFixedRate(() -> {
+            var scheduledExecutorService = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+            scheduledExecutorService.scheduleAtFixedRate(() -> {
                 if (LocalDateTime.now().getHour() == NOON && LocalDateTime.now().getDayOfWeek().getValue() == MONDAY)
                     myChannel.sendMessageFormat("Hey %s, are we continuing our quest this week?", myRole).queue();
-            }, 0, 1, TimeUnit.HOURS);
+            }, INITIAL_DELAY, PERIOD, TimeUnit.HOURS);
         }
     }
 }
