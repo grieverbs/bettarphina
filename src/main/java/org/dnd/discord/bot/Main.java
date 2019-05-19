@@ -2,6 +2,8 @@ package org.dnd.discord.bot;
 
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -23,7 +25,10 @@ public class Main extends ListenerAdapter {
     private final static String DUNGEONS_AND_DRAGONS_CHANNEL = "dungeons_and_dragons";
     private final static String DUNGEONS_AND_DRAGONS_ROLE = "players";
     private final static int NOON = 12;
+    private final static int MINUTE_TO_NOON = 59;
+    private final static int NEW_SECOND = 0;
     private final static int MONDAY = 1;
+    private final static int WEDNESDAY = 7;
     private final static long PERIOD = 1;
     private final static long INITIAL_DELAY = 0;
     private final static int CORE_POOL_SIZE = 1;
@@ -31,6 +36,7 @@ public class Main extends ListenerAdapter {
 //    private static String TEST_ROLE = "super friends";
 
     public static void main(String[] args) throws LoginException {
+        System.out.println("started");
         jdaBuilder = new JDABuilder(AccountType.BOT);
         try {
             jdaBuilder.setToken(configure.getBotToken());
@@ -49,7 +55,7 @@ public class Main extends ListenerAdapter {
         }
         if (event.getMessage().getContentRaw().toLowerCase().contains("roll stats block")) {
             final List<Integer> stats = randomStatBlock();
-            event.getChannel().sendMessageFormat("Stats block:%s\nBuy in weight: %d", printRandomStatBlock(stats),
+            event.getChannel().sendMessageFormat("\nStats block: %s\nBuy in weight: %d", printStatBlock(stats),
                     stats.stream().mapToInt(x -> statMap.get(x)).sum()).queue();
         }
     }
@@ -61,11 +67,45 @@ public class Main extends ListenerAdapter {
         var myRole = event.getJDA().getRoles().stream().filter(x -> x.getName().toLowerCase()
                 .contains(DUNGEONS_AND_DRAGONS_ROLE)).findFirst().orElse(null);
         if (myChannel != null && myRole != null) {
-            var scheduledExecutorService = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
-            scheduledExecutorService.scheduleAtFixedRate(() -> {
-                if (LocalDateTime.now().getHour() == NOON && LocalDateTime.now().getDayOfWeek().getValue() == MONDAY)
-                    myChannel.sendMessageFormat("Hey %s, are we continuing our quest this week?", myRole).queue();
-            }, INITIAL_DELAY, PERIOD, TimeUnit.HOURS);
+            Executors.newScheduledThreadPool(CORE_POOL_SIZE).scheduleAtFixedRate(() -> {
+                if (LocalDateTime.now().getDayOfWeek().getValue() == WEDNESDAY)
+                    checkEveryHour(myChannel, myRole);
+            }, INITIAL_DELAY, PERIOD, TimeUnit.DAYS);
         }
+    }
+
+    private static void checkEveryHour(final TextChannel myChannel, final Role myRole)
+    {
+        var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+        executor.scheduleAtFixedRate(() -> {
+            System.out.println(LocalDateTime.now().getDayOfWeek().getValue());
+            if (LocalDateTime.now().getHour() == (NOON - 1)) {
+                checkEveryMinute(myChannel, myRole);
+                executor.shutdown();
+            }
+        }, INITIAL_DELAY, PERIOD, TimeUnit.HOURS);
+    }
+
+    private static void checkEveryMinute(final TextChannel myChannel, final Role myRole)
+    {
+        var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+        executor.scheduleAtFixedRate(() -> {
+            if (LocalDateTime.now().getMinute() == MINUTE_TO_NOON) {
+                checkEverySecond(myChannel, myRole);
+                executor.shutdown();
+            }
+
+        }, INITIAL_DELAY, PERIOD, TimeUnit.MINUTES);
+    }
+
+    private static void checkEverySecond(final TextChannel myChannel, final Role myRole)
+    {
+        var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+        executor.scheduleAtFixedRate(() -> {
+            if (LocalDateTime.now().getSecond() == NEW_SECOND) {
+                myChannel.sendMessageFormat("Hey %s, are we continuing our quest this week?", myRole).queue();
+                executor.shutdown();
+            }
+        }, INITIAL_DELAY, PERIOD, TimeUnit.SECONDS);
     }
 }

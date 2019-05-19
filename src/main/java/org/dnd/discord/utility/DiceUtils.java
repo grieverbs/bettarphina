@@ -32,7 +32,7 @@ public class DiceUtils {
         return block;
     }
 
-    public static String printRandomStatBlock(final List<Integer> list) {
+    public static String printStatBlock(final List<Integer> list) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("(");
         stringBuilder.append(list.stream().map(x -> x.toString())
