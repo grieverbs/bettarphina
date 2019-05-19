@@ -56,7 +56,7 @@ public class Main extends ListenerAdapter {
         if (event.getMessage().getContentRaw().toLowerCase().contains("roll stats block")) {
             final List<Integer> stats = randomStatBlock();
             event.getChannel().sendMessageFormat("\nStats block: %s\nBuy in weight: %d", printStatBlock(stats),
-                    stats.stream().mapToInt(x -> statMap.get(x)).sum()).queue();
+                    stats.stream().mapToInt(x -> STAT_WEIGHT.get(x)).sum()).queue();
         }
     }
 

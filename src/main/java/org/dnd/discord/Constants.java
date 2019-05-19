@@ -12,7 +12,7 @@ public final class Constants {
     final static int D20 = 20;
     final static int D100 = 100;
 
-    public final static Map<Integer, Integer> statMap = new HashMap<>() {{
+    public final static Map<Integer, Integer> STAT_WEIGHT = new HashMap<>() {{
         put(3, -9);
         put(4, -6);
         put(5, -4);
