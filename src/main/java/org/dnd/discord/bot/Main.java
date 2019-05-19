@@ -29,10 +29,6 @@ public class Main extends ListenerAdapter {
 //    private static String TEST_ROLE = "super friends";
 
     public static void main(String[] args) throws LoginException {
-        for (final Integer integer: DiceUtils.randomStatBlock())
-        {
-            System.out.println(integer);
-        }
         jdaBuilder = new JDABuilder(AccountType.BOT);
         try {
             jdaBuilder.setToken(configure.getBotToken());
@@ -48,6 +44,9 @@ public class Main extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getMessage().getContentRaw().toLowerCase().contains("who is the best player")) {
             event.getChannel().sendMessageFormat("<@%s> is!", event.getGuild().getOwner().getUser().getId()).queue();
+        }
+        if (event.getMessage().getContentRaw().toLowerCase().contains("roll stats block")) {
+            event.getChannel().sendMessage(DiceUtils.printRandomStatBlock()).queue();
         }
     }
 

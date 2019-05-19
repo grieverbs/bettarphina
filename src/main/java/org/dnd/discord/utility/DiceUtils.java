@@ -31,4 +31,12 @@ public class DiceUtils {
         return block;
     }
 
+    public static String printRandomStatBlock() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("(");
+        stringBuilder.append(randomStatBlock().stream().map(x -> x.toString())
+                .collect(Collectors.joining(", ")));
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 }
