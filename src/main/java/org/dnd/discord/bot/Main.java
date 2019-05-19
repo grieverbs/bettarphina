@@ -74,8 +74,7 @@ public class Main extends ListenerAdapter {
         }
     }
 
-    private static void checkEveryHour(final TextChannel myChannel, final Role myRole)
-    {
+    private static void checkEveryHour(final TextChannel myChannel, final Role myRole) {
         var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
         executor.scheduleAtFixedRate(() -> {
             System.out.println(LocalDateTime.now().getDayOfWeek().getValue());
@@ -86,8 +85,7 @@ public class Main extends ListenerAdapter {
         }, INITIAL_DELAY, PERIOD, TimeUnit.HOURS);
     }
 
-    private static void checkEveryMinute(final TextChannel myChannel, final Role myRole)
-    {
+    private static void checkEveryMinute(final TextChannel myChannel, final Role myRole) {
         var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
         executor.scheduleAtFixedRate(() -> {
             if (LocalDateTime.now().getMinute() == MINUTE_TO_NOON) {
@@ -98,8 +96,7 @@ public class Main extends ListenerAdapter {
         }, INITIAL_DELAY, PERIOD, TimeUnit.MINUTES);
     }
 
-    private static void checkEverySecond(final TextChannel myChannel, final Role myRole)
-    {
+    private static void checkEverySecond(final TextChannel myChannel, final Role myRole) {
         var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
         executor.scheduleAtFixedRate(() -> {
             if (LocalDateTime.now().getSecond() == NEW_SECOND) {

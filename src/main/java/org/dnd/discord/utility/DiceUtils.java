@@ -23,12 +23,9 @@ public class DiceUtils {
 
     public static List<Integer> randomStatBlock() {
         final List<Integer> block = new ArrayList<>();
-        block.add(randomAbilityScore());
-        block.add(randomAbilityScore());
-        block.add(randomAbilityScore());
-        block.add(randomAbilityScore());
-        block.add(randomAbilityScore());
-        block.add(randomAbilityScore());
+        for (int count = 0; count < 6; ++count)
+            block.add(randomAbilityScore());
+
         return block;
     }
 

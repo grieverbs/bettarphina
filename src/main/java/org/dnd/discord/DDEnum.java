@@ -15,13 +15,11 @@ public class DDEnum {
 
         private final int diceValue;
 
-        private Dice(final int diceValue)
-        {
+        private Dice(final int diceValue) {
             this.diceValue = diceValue;
         }
 
-        public int roll()
-        {
+        public int roll() {
             return ThreadLocalRandom.current().nextInt(this.diceValue) + 1;
         }
     }
