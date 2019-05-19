@@ -1,6 +1,7 @@
 package org.dnd.discord.utility;
 
-import org.dnd.discord.DnDDices;
+import org.dnd.discord.DDEnum;
+import org.dnd.discord.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.stream.IntStream;
 
 public class DiceUtils {
     public static int randomAbilityScore() {
-        final DnDDices.Die myD6 = DnDDices.Die.D6;
+        final DDEnum.Dice myD6 = DDEnum.Dice.D6;
         final List<Integer> list = IntStream.of(myD6.roll(), myD6.roll(), myD6.roll(), myD6.roll())
                 .sorted().boxed().collect(Collectors.toList());
 
@@ -31,10 +32,10 @@ public class DiceUtils {
         return block;
     }
 
-    public static String printRandomStatBlock() {
+    public static String printRandomStatBlock(final List<Integer> list) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("(");
-        stringBuilder.append(randomStatBlock().stream().map(x -> x.toString())
+        stringBuilder.append(list.stream().map(x -> x.toString())
                 .collect(Collectors.joining(", ")));
         stringBuilder.append(")");
         return stringBuilder.toString();

@@ -5,15 +5,17 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import org.dnd.discord.DnDDices;
 import org.dnd.discord.utility.Configure;
-import org.dnd.discord.utility.DiceUtils;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import static org.dnd.discord.Constants.*;
+import static org.dnd.discord.utility.DiceUtils.*;
 
 public class Main extends ListenerAdapter {
     private static Configure configure = new Configure();
@@ -46,7 +48,9 @@ public class Main extends ListenerAdapter {
             event.getChannel().sendMessageFormat("<@%s> is!", event.getGuild().getOwner().getUser().getId()).queue();
         }
         if (event.getMessage().getContentRaw().toLowerCase().contains("roll stats block")) {
-            event.getChannel().sendMessage(DiceUtils.printRandomStatBlock()).queue();
+            final List<Integer> stats = randomStatBlock();
+            event.getChannel().sendMessageFormat("Stats block:%s\nBuy in weight: %d", printRandomStatBlock(stats),
+                    stats.stream().mapToInt(x -> statMap.get(x)).sum()).queue();
         }
     }
 

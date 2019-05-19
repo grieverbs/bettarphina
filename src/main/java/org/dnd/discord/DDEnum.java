@@ -2,8 +2,8 @@ package org.dnd.discord;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DnDDices {
-    public enum Die{
+public class DDEnum {
+    public enum Dice {
         D4(Constants.D4),
         D6(Constants.D6),
         D8(Constants.D8),
@@ -15,7 +15,7 @@ public class DnDDices {
 
         private final int diceValue;
 
-        private Die(final int diceValue)
+        private Dice(final int diceValue)
         {
             this.diceValue = diceValue;
         }
