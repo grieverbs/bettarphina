@@ -5,6 +5,7 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.events.ReadyEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.dnd.discord.DnDDices;
 import org.dnd.discord.utility.Configure;
 
 import javax.security.auth.login.LoginException;
@@ -27,6 +28,10 @@ public class Main extends ListenerAdapter {
 //    private static String TEST_ROLE = "super friends";
 
     public static void main(String[] args) throws LoginException {
+        for(int count = 0; count < 6; ++count)
+        {
+            System.out.printf("%d", DnDDices.Die.D6.roll());
+        }
         jdaBuilder = new JDABuilder(AccountType.BOT);
         try {
             jdaBuilder.setToken(configure.getBotToken());

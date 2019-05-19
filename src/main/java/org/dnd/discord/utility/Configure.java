@@ -11,10 +11,11 @@ public class Configure {
     public String getBotToken() throws IOException {
         final var inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_PROPERTIES_NAME);
         var properties = new Properties();
-        if(inputStream != null) {
+        if (inputStream != null) {
             properties.load(inputStream);
         } else {
-            final var errorMessage = String.format("property file '%s' not found in the classpath", CONFIG_PROPERTIES_NAME);
+            final var errorMessage = String.format("property file '%s' not found in the classpath",
+                    CONFIG_PROPERTIES_NAME);
             throw new FileNotFoundException(errorMessage);
         }
         return properties.getProperty(BOT_TOKEN);
