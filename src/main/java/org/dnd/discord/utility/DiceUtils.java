@@ -13,7 +13,7 @@ public class DiceUtils {
         final List<Integer> list = IntStream.of(myD6.roll(), myD6.roll(), myD6.roll(), myD6.roll())
                 .sorted().boxed().collect(Collectors.toList());
 
-        // Remove the lowest our of the 4
+        // Remove the lowest dice out of the 4
         list.remove(0);
 
         // Sum the 3
