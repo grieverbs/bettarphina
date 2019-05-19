@@ -1,0 +1,7 @@
+.gradle/**/*
+out/**/*
+.idea/**/*
+gradle.properties
+build/**/*
+gradle/**/*
+src/main/resources/config.properties
