@@ -7,6 +7,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.dnd.discord.DnDDices;
 import org.dnd.discord.utility.Configure;
+import org.dnd.discord.utility.DiceUtils;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -28,9 +29,9 @@ public class Main extends ListenerAdapter {
 //    private static String TEST_ROLE = "super friends";
 
     public static void main(String[] args) throws LoginException {
-        for(int count = 0; count < 6; ++count)
+        for (final Integer integer: DiceUtils.randomStatBlock())
         {
-            System.out.printf("%d", DnDDices.Die.D6.roll());
+            System.out.println(integer);
         }
         jdaBuilder = new JDABuilder(AccountType.BOT);
         try {
