@@ -32,11 +32,8 @@ public class Main extends ListenerAdapter {
     private final static long PERIOD = 1;
     private final static long INITIAL_DELAY = 0;
     private final static int CORE_POOL_SIZE = 1;
-//    private static String TEST_CHANNEL = "general";
-//    private static String TEST_ROLE = "super friends";
 
     public static void main(String[] args) throws LoginException {
-        System.out.println("started");
         jdaBuilder = new JDABuilder(AccountType.BOT);
         try {
             jdaBuilder.setToken(configure.getBotToken());
