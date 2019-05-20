@@ -28,7 +28,7 @@ public class Main extends ListenerAdapter {
     private final static int MINUTE_TO_NOON = 59;
     private final static int NEW_SECOND = 0;
     private final static int MONDAY = 1;
-    private final static int WEDNESDAY = 7;
+    private final static int WEDNESDAY = 3;
     private final static long PERIOD = 1;
     private final static long INITIAL_DELAY = 0;
     private final static int CORE_POOL_SIZE = 1;
@@ -39,7 +39,7 @@ public class Main extends ListenerAdapter {
             jdaBuilder.setToken(configure.getBotToken());
             jdaBuilder.addEventListener(new Main());
             jdaBuilder.buildAsync();
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             System.out.println(exception.getMessage());
             System.exit(0);
         }
@@ -74,7 +74,6 @@ public class Main extends ListenerAdapter {
     private static void checkEveryHour(final TextChannel myChannel, final Role myRole) {
         var executor = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
         executor.scheduleAtFixedRate(() -> {
-            System.out.println(LocalDateTime.now().getDayOfWeek().getValue());
             if (LocalDateTime.now().getHour() == (NOON - 1)) {
                 checkEveryMinute(myChannel, myRole);
                 executor.shutdown();
