@@ -1,5 +1,5 @@
 # bettarphina
-Commands:
+Commands
 *who is the best player
 *roll stats block
 *4d6 stats block statistic
