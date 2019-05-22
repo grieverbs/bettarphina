@@ -13,8 +13,10 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.dnd.discord.Constants.*;
 import static org.dnd.discord.utility.DiceUtils.*;
@@ -50,10 +52,20 @@ public class Main extends ListenerAdapter {
         if (event.getMessage().getContentRaw().toLowerCase().contains("who is the best player")) {
             event.getChannel().sendMessageFormat("<@%s> is!", event.getGuild().getOwner().getUser().getId()).queue();
         }
-        if (event.getMessage().getContentRaw().toLowerCase().contains("roll stats block")) {
-            final List<Integer> stats = randomStatBlock();
+        else if (event.getMessage().getContentRaw().toLowerCase().contains("roll stats block")) {
+            final List<Integer> stats = randomStatBlock(true);
             event.getChannel().sendMessageFormat("\nStats block: %s\nBuy in weight: %d", printStatBlock(stats),
                     stats.stream().mapToInt(x -> STAT_WEIGHT.get(x)).sum()).queue();
+        }
+        else if (event.getMessage().getContentRaw().toLowerCase().contains("4d6 stats block statistic")) {
+            final int sampleSize = 10000000;
+            final Map<Integer, AtomicInteger> map = getD4Statistics(sampleSize, true);
+            event.getChannel().sendMessage(toStringStatistic(map, sampleSize)).queue();
+        }
+        else if (event.getMessage().getContentRaw().toLowerCase().contains("3d6 stats block statistic")) {
+            final int sampleSize = 10000000;
+            final Map<Integer, AtomicInteger> map = getD4Statistics(sampleSize, false);
+            event.getChannel().sendMessage(toStringStatistic(map, sampleSize)).queue();
         }
     }
 
