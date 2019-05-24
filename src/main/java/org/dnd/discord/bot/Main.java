@@ -77,7 +77,7 @@ public class Main extends ListenerAdapter {
                 .contains(DUNGEONS_AND_DRAGONS_ROLE)).findFirst().orElse(null);
         if (myChannel != null && myRole != null) {
             Executors.newScheduledThreadPool(CORE_POOL_SIZE).scheduleAtFixedRate(() -> {
-                if (LocalDateTime.now().getDayOfWeek().getValue() == WEDNESDAY)
+                if (LocalDateTime.now().getDayOfWeek().getValue() == WEDNESDAY - 1)
                     checkEveryHour(myChannel, myRole);
             }, INITIAL_DELAY, PERIOD, TimeUnit.DAYS);
         }

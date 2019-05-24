@@ -58,11 +58,11 @@ public class DiceUtils {
 
     public static String toStringStatistic(final Map<Integer, AtomicInteger> map, final int sampleSize) {
         final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format("Sample size of %d:\n", sampleSize));
         for (final Integer key : map.keySet()) {
             stringBuilder.append(
                     String.format(
-                            "Sample size of %d:\n%d:\t%f\t%d times",
-                            sampleSize,
+                            "%d:\t%f\t%d times",
                             key,
                             (map.get(key).floatValue() / sampleSize),
                             map.get(key).intValue()
