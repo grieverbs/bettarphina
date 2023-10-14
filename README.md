@@ -1,4 +1,12 @@
 # bettarphina
+
+## Visual Studio Code
+
+Using extension:
+
+* Extension Pack for Java
+* Gradle for Java
+
 ## Commands:
 * who is the best player
 * roll stats block
